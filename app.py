@@ -1,7 +1,20 @@
-from flask import Flask, render_template
-
-app = Flask(__name__)
-
-@app.route('/')
+import os
+from flask import Flask,render_template,request
+app=Flask(__name__)
+APP_ROOT=os.path.dirname(os.path.abspath(__file__))
+@app.route("/")
 def index():
-    return render_template('index.html')
+    return render_template("upload.html")
+@app.route("/upload",methods=['POST'])
+def upload():
+    target=os.path.join(APP_ROOT,'images/')
+    if not os.path.isdir(target):
+        os.mkdir(target)
+    for f in request.files.getlist("file"):
+        filename=f.filename
+        dest="/".join([target,filename])
+        f.save(dest)
+    return render_template("complete.html" , image_name=filename)
+    
+if __name__=="__main__":
+    app.run()
