@@ -7,7 +7,7 @@ def index():
     return render_template("upload.html")
 @app.route("/upload",methods=['POST'])
 def upload():
-    target=os.path.join(APP_ROOT,'images/')
+    target=os.path.join(APP_ROOT,'static/')
     if not os.path.isdir(target):
         os.mkdir(target)
     for f in request.files.getlist("file"):
