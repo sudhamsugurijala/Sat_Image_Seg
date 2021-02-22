@@ -1,6 +1,7 @@
 import os
-from unet.unet_baseline import *
 from flask import Flask,render_template,request
+from utils.run_model import getBaseMap
+
 
 app=Flask(__name__)
 APP_ROOT=os.path.dirname(os.path.abspath(__file__))
@@ -18,6 +19,9 @@ def upload():
         filename=f.filename
         dest="/".join([target,filename])
         f.save(dest)
+
+        f = getBaseMap()
+
     return render_template("complete.html" , image_name=filename)
     
 if __name__=="__main__":
