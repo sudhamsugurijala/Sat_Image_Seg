@@ -1,4 +1,4 @@
-from loss_metrics import *
+from unet.loss_metrics import *
 
 IMG_WIDTH=256
 IMG_HEIGHT=256
@@ -64,6 +64,7 @@ def uNet():
   outputs = tf.keras.layers.Conv2D(1, (1, 1), activation='sigmoid')(c9)
   model = tf.keras.Model(inputs=[inputs], outputs=[outputs])
   
-  model.compile(optimizer='adam', loss=getDiceLoss, metrics=[getIOU])
+  model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
+  #model.compile(optimizer='adam', loss=getDiceLoss, metrics=[getIOU])
   return model
 
