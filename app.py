@@ -4,7 +4,6 @@ from utils.run_model import getBaseMap
 
 
 app=Flask(__name__)
-APP_ROOT=os.path.dirname(os.path.abspath(__file__))
 
 @app.route("/")
 def index():
@@ -12,17 +11,25 @@ def index():
 
 @app.route("/upload",methods=['POST'])
 def upload():
-    target=os.path.join(APP_ROOT,'static/')
+    target='C:/Users/G Sudhamsu/Desktop/PROJECT DOC/app/Sat_Image_Seg/static'
     if not os.path.isdir(target):
         os.mkdir(target)
+
+    else :
+        # remove older images
+        for fname in os.listdir(target):
+            if fname.endswith('.jpg'):
+                os.remove(os.path.join(target, fname))
+
     for f in request.files.getlist("file"):
-        filename=f.filename
-        dest="/".join([target,filename])
+        filename="input.jpg"
+        dest=os.path.join(target, filename)
         f.save(dest)
 
-        f = getBaseMap()
-
-    return render_template("complete.html" , image_name=filename)
+    resp = getBaseMap()
+    if type(resp) == str:
+        return resp
+    return "Uploaded"#render_template("complete.html" , image_name=filename)
     
 if __name__=="__main__":
-    app.run()
+    app.run(debug=True)
