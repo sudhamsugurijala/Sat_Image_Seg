@@ -92,7 +92,7 @@ def segmentMapsAndSave(opt):
 	Y.save(os.path.join(OUTPUT_PATH, '{}_mask.png'.format(opt)), 'PNG')
 	return 0
 
-"""
+
 def mergeMapsAndSave():
 	# Roads remaining
 	# base will be water
@@ -103,15 +103,22 @@ def mergeMapsAndSave():
 
 	for i in [3, 1]:
 		X = Image.open(os.path.join(OUTPUT_PATH, '{}_mask.png'.format(i)))
+		X = np.array(X)
+		black_pixels_mask = np.all(X == [0, 0, 0], axis=-1)
+		non_black_pixels_mask = np.any(X != [0, 0, 0], axis=-1)
+		# invert color to multiply
+		X[black_pixels_mask] = [255, 255, 255]
+		X[non_black_pixels_mask] = [0, 0, 0]
+		X = Image.fromarray(X)
+
 		Y = ImageChops.multiply(X.convert('RGB'), Y.convert('RGB'))
 		Y = np.array(Y)
 		black_pixels_mask = np.all(Y == [0, 0, 0], axis=-1)
 		Y[black_pixels_mask] = color[i]
 		Y = Image.fromarray(Y)
 
-	Y.save(os.path.join(OUTPUT_PATH, 'output.png'), 'PNG')
+	Y.save(os.path.join(OUTPUT_PATH, 'output.png'))
 	return 0
-"""
 
 
 def getBaseMap():
@@ -126,5 +133,5 @@ def getBaseMap():
 		if type(Y) == str:
 			return Y
 	
-	#mergeMapsAndSave()
+	mergeMapsAndSave()
 	return 0
