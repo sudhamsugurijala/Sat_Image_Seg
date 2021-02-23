@@ -1,6 +1,21 @@
-h1 {
-    border: 2px #eee solid;
-    color: brown;
+body {
+	text-align: center;
+}
+
+input {
+	text-align: center
+}
+
+#upload-form {
+	display: inline-block;
+    border: 2px black solid;
+    color: black;
     text-align: center;
-    padding: 10px;
+    padding: 20px;
+}
+
+#output-div {
+	display: inline-block;
+	border: 3px black solid;
+	padding: 20px;
 }

@@ -1,5 +1,12 @@
-<head>
-<body>
-<img src ="{{url_for('static' ,filename=image_name)}}">
-</body>
-</head>
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Base Map</title>
+		<link rel="stylesheet" type="text/css" href="../static/css/style.css">
+	</head>
+	<body>
+		<div id="output-div">
+			<img src ="{{url_for('static' ,filename=image_name)}}">
+		</div>
+	</body>
+</html>

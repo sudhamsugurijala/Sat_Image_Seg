@@ -1,24 +1,25 @@
 <html>
-<head>
-<script type='text/javascript'>
-function preview_image(event) 
-{
- var reader = new FileReader();
- reader.onload = function()
- {
-  var output = document.getElementById('output_image');
-  output.src = reader.result;
- }
- reader.readAsDataURL(event.target.files[0]);
-}
-</script>
-</head>
-<body>
-<form id="upload-form" action= "{{url_for ('upload') }}" method="POST" enctype="multipart/form-data">
-  <p>Select image to upload:<p><br><br>
-  <input type="file" name="file" accept=".png, .jpg, .jpeg" onchange="preview_image(event)"><br>
-   <img id="output_image" width="200" height="200"/><br><br>
-  <input type="submit" value="Upload Image" name="submit">
-</form>
-</body>
+	<head>
+		<link rel="stylesheet" type="text/css" href="../static/css/style.css">
+		<title>Image Upload</title>
+		<script type='text/javascript'>
+			function preview_image(event) {
+				var reader = new FileReader();
+				reader.onload = function() {
+					var output = document.getElementById('output_image');
+					output.src = reader.result;
+				}
+				reader.readAsDataURL(event.target.files[0]);
+			}
+		</script>
+	</head>
+	<body>
+		<form id="upload-form" action= "{{url_for ('upload') }}" method="POST" enctype="multipart/form-data">
+			<p>Select image to upload </p>
+			<p>(Size must be multiple of 256, min 256 length and breadth)</p><br><br>
+			<input type="file" name="file" accept=".png, .jpg, .jpeg" onchange="preview_image(event)"><br>
+			<img id="output_image" width="400" height="400"/><br><br>
+			<input type="submit" value="Upload Image" name="submit">
+		</form>
+	</body>
 </html>
