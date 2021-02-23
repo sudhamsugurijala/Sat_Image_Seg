@@ -1,4 +1,5 @@
 import os
+
 from flask import Flask,render_template,request
 from utils.run_model import getBaseMap
 
@@ -18,7 +19,7 @@ def upload():
     else :
         # remove older images
         for fname in os.listdir(target):
-            if fname.endswith('.jpg'):
+            if fname.endswith('.jpg') or fname.endswith('.png'):
                 os.remove(os.path.join(target, fname))
 
     for f in request.files.getlist("file"):

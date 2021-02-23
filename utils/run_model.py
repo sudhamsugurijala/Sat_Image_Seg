@@ -1,6 +1,8 @@
 # Constant paths for saving inputs, weights
-from unet.unet_baseline import *
+from PIL import ImageChops
 from unet.loss_metrics import *
+from utils.unet_baseline_model import retMask
+from utils.pixel_wise_model import getPixelMask
 
 IMG_PATH = "C:/Users/G Sudhamsu/Desktop/PROJECT DOC/app/Sat_Image_Seg/static"
 OUTPUT_PATH = IMG_PATH
@@ -10,29 +12,9 @@ ROAD_WEIGHTS = ""
 GREEN_WEIGHTS = ""
 WATER_WEIGHTS = ""
 
-IMG_HEIGHT = IMG_WIDTH = 256
-IMG_CHANNELS = 3
-
-def retMask(img, weights_path):
-	model = uNet()
-	model.load_weights(weights_path)
-	X_test = np.zeros((1, IMG_HEIGHT, IMG_WIDTH, IMG_CHANNELS), dtype=np.float32)
-	X_test[0] = img
-	preds_test=model.predict(X_test, verbose=1)
-	preds_test = (preds_test > 0.7).astype(np.uint8)
-	mask=preds_test[0]
-	for i in range(mask.shape[0]):
-		for j in range(mask.shape[1]):
-			if mask[i][j] == 1:
-				mask[i][j] = 255
-			else:
-				mask[i][j] = 0
-
-	merged_image = cv2.merge((mask,mask,mask))
-	return merged_image
-
 
 def splitImageAndTest(img, weights_path):
+	"""Splits input image into 256x256 tiles, gets masks and returns output mask"""
 	Y = np.zeros((img.shape[0], img.shape[1], img.shape[2]), np.uint8)
 	for i in range(0, img.shape[0], 256):
 		for j in range(0, img.shape[1], 256):
@@ -41,14 +23,14 @@ def splitImageAndTest(img, weights_path):
 	return Y
 
 
-def colourMask(opt):
-	# YET TO DEFINE
+def colourMaskAndSave(opt):
+	"""Gets mask and applies class colour"""
 	if opt == 1: colour = [255, 0, 0] # RED
-	if opt == 2: colour = [0, 0, 0]   # BLACK
+	if opt == 2: return 0 #colour = [0, 0, 0]   # BLACK
 	if opt == 3: colour = [0, 255, 0] # GREEN
 	if opt == 4: colour = [0, 0, 255] # BLUE
 
-	file_path = os.path.join(OUTPUT_PATH, "{}_mask.jpg".format(opt))
+	file_path = os.path.join(OUTPUT_PATH, "{}_mask.png".format(opt))
 	if not os.path.exists(file_path):
 		return "No mask found to colour!"
 
@@ -64,7 +46,14 @@ def colourMask(opt):
 	plt.imsave(os.path.join(OUTPUT_PATH, '{}_color.png'.format(opt)), image_copy)
 
 
-def segmentMaps(opt):
+def segmentMapsAndSave(opt):
+	"""
+	Load input and get option (class) to segment
+	option 1 - Buildings
+	option 2 - Roads
+	option 3 - Greenery
+	option 4 - Water
+	"""
 	# check if input image is available
 	file_path = os.path.join(IMG_PATH, "input.jpg")
 	if not os.path.exists(file_path):
@@ -83,41 +72,59 @@ def segmentMaps(opt):
 
 	# Roads
 	if opt == 2:
-		Y = splitImageAndTest(img, ROAD_WEIGHTS)
+		return 0
+		#Y = splitImageAndTest(img, ROAD_WEIGHTS)
 
 	# Greenery
 	if opt == 3:
-		Y = splitImageAndTest(img, GREEN_WEIGHTS)
+		#Y = splitImageAndTest(img, GREEN_WEIGHTS)
+		Y = getPixelMask(img, opt)
 
 	# Water
 	if opt == 4:
-		Y = splitImageAndTest(img, WATER_WEIGHTS)
+		#Y = splitImageAndTest(img, WATER_WEIGHTS)
+		Y = getPixelMask(img, opt)
 
 	if type(Y) == str:
 		return Y
 	
 	Y = Image.fromarray(Y)
-	Y.save(os.path.join(OUTPUT_PATH, '{}_mask.jpg'.format(opt)), 'JPEG')
+	Y.save(os.path.join(OUTPUT_PATH, '{}_mask.png'.format(opt)), 'PNG')
 	return 0
 
+"""
+def mergeMapsAndSave():
+	# Roads remaining
+	# base will be water
+	file_path = os.path.join(OUTPUT_PATH, '4_color.png')
+	# index 0 is dummy, blue is not needed as it is base
+	color = [[], [255, 0, 0], [0, 0, 0], [0, 255, 0]]
+	Y = Image.open(file_path)
 
-#def mergeMaps(map1, map2):
-	# YET TO DEFINE
+	for i in [3, 1]:
+		X = Image.open(os.path.join(OUTPUT_PATH, '{}_mask.png'.format(i)))
+		Y = ImageChops.multiply(X.convert('RGB'), Y.convert('RGB'))
+		Y = np.array(Y)
+		black_pixels_mask = np.all(Y == [0, 0, 0], axis=-1)
+		Y[black_pixels_mask] = color[i]
+		Y = Image.fromarray(Y)
+
+	Y.save(os.path.join(OUTPUT_PATH, 'output.png'), 'PNG')
+	return 0
+"""
 
 
 def getBaseMap():
-	for i in range(1, 1+1):
-		Y = segmentMaps(i)
+	for i in range(1, 4+1):
+		Y = segmentMapsAndSave(i)
 
 		if type(Y) == str:
 			return Y
 
-		Y = colourMask(i)
+		Y = colourMaskAndSave(i)
 
 		if type(Y) == str:
 			return Y
 	
-	#Y = mergeMaps()
-	#Y = Image.fromarray(Y)
-	#Y.save(os.path.join(OUTPUT_PATH, 'output.jpg'), 'JPEG')
+	#mergeMapsAndSave()
 	return 0
