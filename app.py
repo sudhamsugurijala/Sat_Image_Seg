@@ -27,10 +27,13 @@ def upload():
         dest=os.path.join(target, filename)
         f.save(dest)
 
+    # save basemap to static as output.png
     resp = getBaseMap()
     if type(resp) == str:
         return resp
-    return "Uploaded"#render_template("complete.html" , image_name=filename)
+
+    filename = "output.png"
+    return render_template("complete.html" , image_name=filename)
     
 if __name__=="__main__":
     app.run(debug=True)
