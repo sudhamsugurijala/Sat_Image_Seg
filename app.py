@@ -12,7 +12,7 @@ def index():
 
 @app.route("/upload",methods=['POST'])
 def upload():
-    target='C:/Users/G Sudhamsu/Desktop/PROJECT DOC/app/Sat_Image_Seg/static'
+    target='./static'
     if not os.path.isdir(target):
         os.mkdir(target)
 

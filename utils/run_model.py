@@ -4,10 +4,10 @@ from unet.loss_metrics import *
 from utils.unet_baseline_model import retMask
 from utils.pixel_wise_model import getPixelMask
 
-IMG_PATH = "C:/Users/G Sudhamsu/Desktop/PROJECT DOC/app/Sat_Image_Seg/static"
+IMG_PATH = "./static"
 OUTPUT_PATH = IMG_PATH
 
-BUILDING_WEIGHTS = "C:/Users/G Sudhamsu/Desktop/PROJECT DOC/app/Sat_Image_Seg/weights/buildings/model_sample.h5"
+BUILDING_WEIGHTS = "./weights/buildings/model_sample.h5"
 ROAD_WEIGHTS = ""
 GREEN_WEIGHTS = ""
 WATER_WEIGHTS = ""
