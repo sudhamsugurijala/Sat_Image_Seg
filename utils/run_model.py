@@ -43,7 +43,8 @@ def colourMaskAndSave(opt):
 	image_copy[black_pixels_mask] = [255, 255, 255]
 	image_copy[non_black_pixels_mask] = colour
 
-	plt.imsave(os.path.join(OUTPUT_PATH, '{}_color.png'.format(opt)), image_copy)
+	image_copy = Image.fromarray(image_copy.astype('uint8'), 'RGB')
+	image_copy.save(os.path.join(OUTPUT_PATH, '{}_color.png'.format(opt)))
 
 
 def segmentMapsAndSave(opt):
