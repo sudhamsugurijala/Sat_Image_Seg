@@ -1,7 +1,10 @@
+tensorflow-gpu
+keras
 matplotlib
 numpy
 Pillow
-scikit-learn
-scipy
-tensorflow
 opencv-contrib-python
+tqdm
+scipy
+scikit-learn
+scikit-image

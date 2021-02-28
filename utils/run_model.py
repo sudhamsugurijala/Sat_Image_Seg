@@ -1,7 +1,7 @@
 # Constant paths for saving inputs, weights
 from PIL import ImageChops
 from unet.loss_metrics import *
-from utils.unet_baseline_model import retMask
+from utils.unet_base_binary import retMask
 from utils.pixel_wise_model import getPixelMask
 
 IMG_PATH = "./static"
