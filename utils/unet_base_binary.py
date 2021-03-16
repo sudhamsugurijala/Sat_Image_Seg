@@ -1,5 +1,4 @@
 from unet.unet_base_binary_arch import *
-from unet.loss_metrics import *
 
 IMG_HEIGHT = IMG_WIDTH = 256
 IMG_CHANNELS = 3
