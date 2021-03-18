@@ -8,7 +8,8 @@ from utils.unet_multi import retMap
 IMG_PATH = "./static"
 OUTPUT_PATH = IMG_PATH
 
-BUILDING_WEIGHTS = "./weights/buildings/model_sample.h5"
+# Every model is named model.h5 for simplicity
+BUILDING_WEIGHTS = "./weights/buildings/model.h5"
 ROAD_WEIGHTS = ""
 LANDCOVER_WEIGHTS="./weights/landcover/model.h5"
 

@@ -5,8 +5,9 @@ IMG_CHANNELS = 3
 
 def retMask(img, weights_path):
 	"""Return mask given image aand weights path"""
-	model = uNet()
-	model.load_weights(weights_path)
+	# Below line needed only if weights are to be loaded and not the entire model.
+	#model = uNet()
+	model=load_model(weights_path, custom_objects={'getIOU':getIOU})
 	X_test = np.zeros((1, IMG_HEIGHT, IMG_WIDTH, IMG_CHANNELS), dtype=np.float32)
 	X_test[0] = img
 	preds_test=model.predict(X_test, verbose=1)

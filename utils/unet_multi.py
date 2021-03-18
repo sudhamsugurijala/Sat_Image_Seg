@@ -18,7 +18,7 @@ def retMap(img, path):
 			if test[i][j] == 0:
 				mask[i][j] = [255, 255, 255]
 			elif test[i][j] == 1: # BUILDING
-				mask[i][j] = [255, 0, 0]
+				mask[i][j] = [255, 255, 255]
 			elif test[i][j] == 2: # Green
 				mask[i][j] = [0, 255, 0]
 			elif test[i][j] == 3: # Water
