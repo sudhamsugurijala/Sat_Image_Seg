@@ -11,7 +11,7 @@ def retMask(img, weights_path):
 	X_test = np.zeros((1, IMG_HEIGHT, IMG_WIDTH, IMG_CHANNELS), dtype=np.float32)
 	X_test[0] = img
 	preds_test=model.predict(X_test, verbose=1)
-	preds_test = (preds_test > 0.7).astype(np.uint8)
+	preds_test = (preds_test > 0.5).astype(np.uint8)
 	mask=preds_test[0]
 	for i in range(mask.shape[0]):
 		for j in range(mask.shape[1]):

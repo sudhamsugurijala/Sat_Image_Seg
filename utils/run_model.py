@@ -37,7 +37,7 @@ def splitImageAndMap(img, weights_path):
 def colourMaskAndSave(opt):
 	"""Gets mask and applies class colour"""
 	if opt == 1: colour = [255, 0, 0] # RED
-	if opt == 2: return 0 #colour = [0, 0, 0]   # BLACK
+	if opt == 2: colour = [0, 0, 0]   # BLACK
 
 	file_path = os.path.join(OUTPUT_PATH, "{}_mask.png".format(opt))
 	if not os.path.exists(file_path):
@@ -91,7 +91,7 @@ def segmentMapsAndSave(opt):
 	return 0
 
 
-def mergeMapsAndSave():
+def mergeMapsAndSave(token):
 	# Roads remaining
 	# base will be water
 	file_path = os.path.join(OUTPUT_PATH, '3_color.png')
@@ -99,7 +99,7 @@ def mergeMapsAndSave():
 	color = [[], [255, 0, 0], [0, 0, 0]]
 	Y = Image.open(file_path)
 
-	for i in [2, 1]:
+	for i in [1, 2]:
 		X = Image.open(os.path.join(OUTPUT_PATH, '{}_mask.png'.format(i)))
 		X = np.array(X)
 		black_pixels_mask = np.all(X == [0, 0, 0], axis=-1)
@@ -115,7 +115,7 @@ def mergeMapsAndSave():
 		Y[black_pixels_mask] = color[i]
 		Y = Image.fromarray(Y)
 
-	Y.save(os.path.join(OUTPUT_PATH, 'output.png'))
+	Y.save(os.path.join(OUTPUT_PATH, 'map_{}.png'.format(token)))
 	return 0
 
 
@@ -137,7 +137,7 @@ def generateLandcoverMap():
 	return 0
 
 
-def getBaseMap():
+def getBaseMap(token):
 
 	# separately run multiclass model first
 	Y = generateLandcoverMap()
@@ -154,5 +154,5 @@ def getBaseMap():
 		if type(Y) == str:
 			return Y
 	
-	mergeMapsAndSave()
+	mergeMapsAndSave(token)
 	return 0

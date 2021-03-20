@@ -1,4 +1,5 @@
 import os
+import uuid
 
 from flask import Flask,render_template,request
 from utils.run_model import getBaseMap
@@ -27,12 +28,14 @@ def upload():
         dest=os.path.join(target, filename)
         f.save(dest)
 
-    # save basemap to static as output.png
-    resp = getBaseMap()
+    # save basemap to static as map_token.png
+    # token is a 6 digit unique id for each map output (browser cache solution)
+    token = uuid.uuid4().hex[:6] 
+    resp = getBaseMap(token)
     if type(resp) == str:
         return resp
 
-    filename = "output.png"
+    filename = "map_{}.png".format(token)
     return render_template("complete.html" , image_name=filename)
     
 if __name__=="__main__":
