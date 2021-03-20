@@ -10,7 +10,7 @@ OUTPUT_PATH = IMG_PATH
 
 # Every model is named model.h5 for simplicity
 BUILDING_WEIGHTS = "./weights/buildings/model.h5"
-ROAD_WEIGHTS = ""
+ROAD_WEIGHTS = "./weights/roads/model.h5"
 LANDCOVER_WEIGHTS="./weights/landcover/model.h5"
 
 
@@ -81,8 +81,7 @@ def segmentMapsAndSave(opt):
 
 	# Roads
 	if opt == 2:
-		return 0
-		#Y = splitImageAndTest(img, ROAD_WEIGHTS)
+		Y = splitImageAndTest(img, ROAD_WEIGHTS)
 
 	if type(Y) == str:
 		return Y
@@ -100,7 +99,7 @@ def mergeMapsAndSave():
 	color = [[], [255, 0, 0], [0, 0, 0]]
 	Y = Image.open(file_path)
 
-	for i in [1]:
+	for i in [2, 1]:
 		X = Image.open(os.path.join(OUTPUT_PATH, '{}_mask.png'.format(i)))
 		X = np.array(X)
 		black_pixels_mask = np.all(X == [0, 0, 0], axis=-1)
