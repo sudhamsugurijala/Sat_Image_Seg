@@ -6,7 +6,8 @@
 	</head>
 	<body>
 		<div id="output-div">
-			<img src ="{{url_for('static' ,filename=image_name)}}">
+			<img src = "{{url_for('static' , filename=image_name)}}", alt="base map">
+			<img src="../static/labels/labels.png" alt="labels" style="width:250px;height:250px;">
 		</div>
 	</body>
 </html>
