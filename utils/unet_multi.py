@@ -1,7 +1,7 @@
 from unet.loss_metrics import *
 
 def retMap(img, path):
-	model = load_model(path)
+	model = load_model(path, custom_objects={"mean_iou":mean_iou})
 	X_pred = np.array([img])
 
 	Y_pred = model.predict(X_pred)
