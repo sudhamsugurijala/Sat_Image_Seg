@@ -71,3 +71,10 @@ def getIOU(y_true, y_pred, smooth=1):
   union = K.sum(y_true,[1,2,3])+K.sum(y_pred,[1,2,3])-intersection
   return K.mean((intersection + smooth) / (union + smooth), axis=0)
 
+
+def mean_iou(y_true, y_pred, smooth=1):
+  y_pred = tf.round(tf.cast(y_pred, tf.int32))
+  intersection = tf.reduce_sum(tf.cast(y_true, tf.float32) * tf.cast(y_pred, tf.float32), axis=[1])
+  union = tf.reduce_sum(tf.cast(y_true, tf.float32),axis=[1]) + tf.reduce_sum(tf.cast(y_pred, tf.float32),axis=[1])
+  return tf.reduce_mean((intersection + smooth) / (union - intersection + smooth))
+
