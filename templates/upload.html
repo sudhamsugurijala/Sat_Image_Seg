@@ -17,9 +17,9 @@
 		<form id="upload-form" action= "{{url_for ('upload') }}" method="POST" enctype="multipart/form-data">
 			<p>Select image to upload </p>
 			<p>(Size must be multiple of 256, min 256 length and breadth)</p><br><br>
-			<input type="file" name="file" accept=".jpg, .jpeg" onchange="preview_image(event)"><br>
+			<input type="file" name="file" accept=".jpg, .jpeg" onchange="preview_image(event)" required>
+			<input type="submit" value="Upload Image" name="submit"><br>
 			<img id="output_image"/><br><br>
-			<input type="submit" value="Upload Image" name="submit">
 		</form>
 	</body>
 </html>
