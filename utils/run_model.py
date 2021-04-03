@@ -1,5 +1,6 @@
 # Constant paths for saving inputs, weights
 from PIL import ImageChops
+import concurrent.futures
 from unet.loss_metrics import *
 from utils.unet_base_binary import retMask
 from utils.unet_multi import retMap
@@ -19,7 +20,11 @@ def splitImageAndTest(img, weights_path):
 	Y = np.zeros((img.shape[0], img.shape[1], img.shape[2]), np.uint8)
 	for i in range(0, img.shape[0], 256):
 		for j in range(0, img.shape[1], 256):
-			Y[i:i+256, j:j+256] = retMask(img[i:i+256, j:j+256], weights_path)
+			## Threading
+			with concurrent.futures.ThreadPoolExecutor() as thread:
+				thread_out = thread.submit(retMask, img[i:i+256, j:j+256], weights_path)
+				Y[i:i+256, j:j+256] = thread_out.result() #retMask(img[i:i+256, j:j+256], weights_path)
+			## Threading
 
 	return Y
 
@@ -29,7 +34,12 @@ def splitImageAndMap(img, weights_path):
 	Y = np.zeros((img.shape[0], img.shape[1], img.shape[2]), np.uint8)
 	for i in range(0, img.shape[0], 256):
 		for j in range(0, img.shape[1], 256):
-			Y[i:i+256, j:j+256] = retMap(img[i:i+256, j:j+256], weights_path)
+			## Threading
+			with concurrent.futures.ThreadPoolExecutor() as thread:
+				thread_out = thread.submit(retMap, img[i:i+256, j:j+256], weights_path)
+				Y[i:i+256, j:j+256] = thread_out.result() #retMask(img[i:i+256, j:j+256], weights_path)
+			## Threading
+			#Y[i:i+256, j:j+256] = retMap(img[i:i+256, j:j+256], weights_path)
 
 	return Y	
 
