@@ -29,7 +29,7 @@ Project Requirements
 8. scipy
 9. scikit-learn
 10. scikit-image
-11. flask
+11. Flask
 
 
 ==================================================================================
