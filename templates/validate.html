@@ -7,7 +7,8 @@
 	<body>
 		<div id="output-div">
 			<h1 style="color: green;">BASE MAP ON INPUT</h1>
-			<a href="{{url_for('upload')}}"><button>Show Map</button></a><br>
+			<a href="{{url_for('upload')}}"><button>Show Map</button></a>
+			<a href="{{url_for('index')}}"><button>Input Page</button></a><br><br>
 			<img src = "{{url_for('static' , filename='validation.png')}}", alt="Validation image">
 			<img src="../static/labels/labels.png" alt="labels" style="width:250px;height:250px;">
 		</div>
