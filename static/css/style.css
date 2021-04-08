@@ -14,6 +14,31 @@ input {
     padding: 20px;
 }
 
+@keyframes jump {
+    0% { transform: translate(-50%, -50%) scale(1.25, 0.75); }
+    50% { transform: translate(-50%, -150%) scale(1, 1); }
+    55% { transform: translate(-50%, -150%) rotate(15deg); }
+    60% { transform: translate(-50%, -150%) rotate(-15deg); }
+    65% { transform: translate(-50%, -150%) rotate(15deg); }
+    70% { transform: translate(-50%, -150%) rotate(-15deg); }
+    100% { transform: translate(-50%, -50%) scale(1.25, 0.75); }
+}
+
+#loading-box {
+	width: 170px;
+	height: 55px;
+	margin-top: 150px;
+	margin-left: 50%;
+	background-color: #00BFFF;
+	text-align: center;
+	vertical-align: middle;
+	border-radius: 10px;
+	transform: translate(-50%, -50%);
+    animation: jump 2.5s infinite;
+	border: 2px solid black;
+	font-family: cursive;
+}
+
 #output-div {
 	display: inline-block;
 	border: 3px black solid;
