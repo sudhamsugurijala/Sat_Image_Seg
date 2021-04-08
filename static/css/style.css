@@ -1,5 +1,6 @@
 body {
 	text-align: center;
+	font-family: cursive;
 }
 
 input {
@@ -27,7 +28,7 @@ input {
 #loading-box {
 	width: 170px;
 	height: 55px;
-	margin-top: 150px;
+	margin-top: 250px;
 	margin-left: 50%;
 	background-color: #00BFFF;
 	text-align: center;

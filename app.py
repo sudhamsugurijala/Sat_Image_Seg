@@ -11,6 +11,11 @@ def index():
     return render_template("upload.html")
 
 
+@app.route("/validate")
+def validate():
+    return render_template("validate.html")
+
+
 @app.route('/loading', methods=['POST'])
 def loading():
     target='./static'
@@ -52,6 +57,8 @@ def upload():
         with open("./static/filename.txt", 'w') as f:
             f.write(filename)
         return make_response('POST request successful', 200)
-    
+
+
 if __name__=="__main__":
     app.run(debug=True)
+

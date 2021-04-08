@@ -126,6 +126,13 @@ def mergeMapsAndSave(token):
 		Y = Image.fromarray(Y)
 
 	Y.save(os.path.join(OUTPUT_PATH, 'map_{}.png'.format(token)))
+	validation = Image.open(os.path.join(IMG_PATH, "input.jpg"))
+
+	Y = Y.convert('RGBA')
+	validation = validation.convert('RGBA')
+
+	validation = Image.blend(validation, Y, 0.5)
+	validation.save(os.path.join(IMG_PATH, "validation.png"), "PNG")
 	return 0
 
 
