@@ -13,7 +13,7 @@ In root dir (same level as `app.py`) -
 * Create a `weights` folder with sub folders for each class of segmentation targets (like `road`, `building`, `water` etc).
 * Store weights in respective subfolders.
 
-## Samples User Flow
+## Sample User Flow
 * The user uploads an image from their local file system
 * A preview of the input image is shown
 
@@ -30,3 +30,7 @@ In root dir (same level as `app.py`) -
 * The user can click the `Validate Map` button to superimpose the result on the input image as shwon below:
 
 ![validating result](https://github.com/sudhamsugurijala/Satellite-Image-Segmentation/blob/main/static/css/images/validation.png)
+
+
+## Publication
+* Publication - [Link](https://link.springer.com/chapter/10.1007/978-3-031-05767-0_27)
