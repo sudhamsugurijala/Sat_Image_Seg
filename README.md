@@ -33,4 +33,5 @@ In root dir (same level as `app.py`) -
 
 
 ## Publication
-* Publication - [Link](https://link.springer.com/chapter/10.1007/978-3-031-05767-0_27)
+* This work is published in the following chapter - [Link](https://link.springer.com/chapter/10.1007/978-3-031-05767-0_27)
+  * It was also presented at the conference mentioned in the chapter.
